@@ -27,6 +27,21 @@ app.get("/employees/:id", (req, res) => {
   }
 });
 
+// POST /employees will add new employee with provided name (if correctly provided)
+
+
+// 404 and error-handling middleware:
+app.use((req, res, next) => {
+  next({ status: 404, message: "Not found." });
+});
+
+// error-handling:
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.status ?? 500);
+  res.json(err.message ?? "Sorry, something went wrong!");
+});
+
 app.listen(PORT, () => {
   `Listening on port ${PORT}...`;
 });
