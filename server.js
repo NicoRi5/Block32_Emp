@@ -1,4 +1,5 @@
 const express = require("express");
+const { v4: uuidv4 } = require("uuid");
 const app = express();
 const PORT = 3000;
 
@@ -28,7 +29,15 @@ app.get("/employees/:id", (req, res) => {
 });
 
 // POST /employees will add new employee with provided name (if correctly provided)
+app.post("/employees", (req, res, next) => {
+  const { name } = req.body;
+  if (!name?.trim()) {
+    return res.status(400).send("No correctly provided name!");
+  }
 
+  employees.push({ id: uuidvd(), name: name.trim });
+  res.send(employees);
+});
 
 // 404 and error-handling middleware:
 app.use((req, res, next) => {
